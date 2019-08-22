@@ -174,15 +174,72 @@ public class BukkitTools {
 		return m;
 	}
 	
-	
 	/*
 	 * Block handling Methods.
 	 */
-
 	public static String getTypeKey(Block block) {
 		return block.getType().getKey().toString();
 	}
 	
+	/*
+	 * BlockState Methods
+	 */
+	public static Material getType(BlockState state) {
+		
+		return state.getType();
+	}
+	
+	/*
+	 * Material handling Methods.
+	 */
+	/**
+	 * Find a Material from an Id.
+	 * Helpfully using Phoenix616's useful IdConverter.jar
+	 * https://www.spigotmc.org/resources/id-converter.52099/
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static Material getMaterial(int id) {
+		return Material.getMaterial(IdMappings.getById(String.valueOf(id)).getFlatteningType());
+	}
+
+	/**
+	 * Accepts an X or Z value and returns the associated Towny plot value.
+	 * 
+	 * @param value
+	 * @return int of the relevant townblock x/z.
+	 */
+	public static int calcChunk(int value) {
+
+		return (value * TownySettings.getTownBlockSize()) / 16;
+	}
+	
+	/**
+	 * 
+	 * @return whether server is running spigot (and not CraftBukkit.)
+	 */
+	public static boolean isSpigot() {
+		try {
+			Class.forName("org.bukkit.entity.Player$Spigot");
+			return true;
+		} catch (Throwable tr) {
+			return false;
+		}
+		
+	}
+	
+	/**
+	 * Get the Id (magic number) of a Material type.
+	 * 
+	 * @param material
+	 * @return
+	 */
+	@Deprecated
+	public static int getMaterialId(Material material) {
+		
+		return material.getId();
+	}
 	// Will be removed completely when the new plotsnapshot system is made.
 	@Deprecated
 	public static int getTypeId(Block block) {
@@ -205,69 +262,19 @@ public class BukkitTools {
 		Material mat = Material.getMaterial(IdMappings.getById(String.valueOf(type)).getFlatteningType());
 		block.setType(mat, applyPhysics);
 	}
-		
-	
-	/*
-	 * BlockState Methods
-	 */
-
-	public static Material getType(BlockState state) {
-		
-		return state.getType();
-	}
-	
+	@Deprecated
 	public static MaterialData getData(BlockState state) {
 		
 		return state.getData();
 	}
 	
-	
 	/*
 	 * Item Handling Methods
 	 */
-	
+	@Deprecated
 	public static MaterialData getData(ItemStack stack) {
 		
 		return stack.getData();
 	}
-	
-	
-	/*
-	 * Material handling Methods.
-	 */
-	
-	/**
-	 * Find a Material from an Id.
-	 * Helpfully using Phoenix616's useful IdConverter.jar
-	 * https://www.spigotmc.org/resources/id-converter.52099/
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public static Material getMaterial(int id) {
-		return Material.getMaterial(IdMappings.getById(String.valueOf(id)).getFlatteningType());
-	}
-	
-	/**
-	 * Get the Id (magic number) of a Material type.
-	 * 
-	 * @param material
-	 * @return
-	 */
-	@Deprecated
-	public static int getMaterialId(Material material) {
-		
-		return material.getId();
-	}
 
-	/**
-	 * Accepts an X or Z value and returns the associated Towny plot value.
-	 * 
-	 * @param value
-	 * @return int of the relevant townblock x/z.
-	 */
-	public static int calcChunk(int value) {
-
-		return (value * TownySettings.getTownBlockSize()) / 16;
-	}
 }

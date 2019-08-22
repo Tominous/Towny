@@ -12,7 +12,11 @@ import com.palmergames.bukkit.towny.object.CellBorder;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.towny.utils.BorderUtil;
+import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.DrawSmokeTaskFactory;
+
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,7 +59,11 @@ public class TownyCustomListener implements Listener {
 				ChunkNotification chunkNotifier = new ChunkNotification(from, to);
 				String msg = chunkNotifier.getNotificationString(resident);
 				if (msg != null)
-					player.sendMessage(msg);
+					if (!BukkitTools.isSpigot())
+						player.sendMessage(msg);
+					else {
+						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
+					}
 			}
 		} catch (NotRegisteredException e) {
 			// likely Citizens' NPC
