@@ -104,6 +104,7 @@ public class Towny extends JavaPlugin {
 
 	private Essentials essentials = null;
 	private boolean citizens2 = false;
+	public static boolean isSpigot = false;
 
 	private boolean error = false;
 	
@@ -138,6 +139,8 @@ public class Towny extends JavaPlugin {
 		version = this.getDescription().getVersion();
 
 		townyUniverse = TownyUniverse.getInstance();
+		
+		isSpigot = BukkitTools.isSpigot();
 
 		// Setup classes
 		BukkitTools.initialize(this);
